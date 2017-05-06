@@ -2,7 +2,7 @@ import {keyBy, map} from 'lodash';
 import {SUBREDDIT_ARTICLES_FETCH_RESPONSE} from '../../actions/action-types';
 
 const HOME_INITIAL_STATE = {
-	selected_subreddit: 'highqualitygifs'
+	subreddit_top_articles: [],
 };
 
 export function homeReducer(state = HOME_INITIAL_STATE, action) {

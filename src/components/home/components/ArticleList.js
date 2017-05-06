@@ -11,6 +11,13 @@ class ArticleList extends React.Component {
 		this.props.fireArticlesFetch(this.props.subreddit);
 	}
 
+	componentWillReceiveProps(nextProps) {
+		if (this.props.subreddit !== nextProps.subreddit) {
+			this.props.fireArticlesFetch(nextProps.subreddit);
+
+		}
+	}
+
 	render() {
 		return (
 			<ListGroup>
@@ -31,7 +38,7 @@ export {ArticleList};
 
 const mapStateToProps = (state) => {
 	return {
-		subreddit: get(state, `home.selected_subreddit`),
+		subreddit: get(state, `app.selected_subreddit`),
 		articles: get(state, `home.subreddit_top_articles`, []),
 	}
 };
