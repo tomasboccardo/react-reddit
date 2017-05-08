@@ -8,6 +8,8 @@ import createRoutes from './routes';
 
 
 import './index.css';
+import 'font-awesome/css/font-awesome.css';
+
 
 const history = createBrowserHistory();
 const store = configureStore({history});

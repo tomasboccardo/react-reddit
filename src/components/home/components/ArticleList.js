@@ -14,14 +14,13 @@ class ArticleList extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		if (this.props.subreddit !== nextProps.subreddit) {
 			this.props.fireArticlesFetch(nextProps.subreddit);
-
 		}
 	}
 
 	render() {
 		return (
 			<ListGroup>
-				{this.props.articles.map(article => <ArticleItem id={article}/>)}
+				{this.props.articles.map(articleId => <ArticleItem key={articleId} id={articleId}/>)}
 			</ListGroup>
 		);
 	}
@@ -38,12 +37,15 @@ export {ArticleList};
 
 const mapStateToProps = (state) => {
 	return {
-		subreddit: get(state, `app.selected_subreddit`),
 		articles: get(state, `home.subreddit_top_articles`, []),
 	}
 };
 
 const ArticleListContainer = connect(mapStateToProps, {fireArticlesFetch})(ArticleList);
+
+ArticleListContainer.propTypes = {
+	subreddit: PropTypes.string.isRequired,
+};
 
 
 export default ArticleListContainer;
