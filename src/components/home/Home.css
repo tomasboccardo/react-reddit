@@ -1,7 +1,22 @@
+.Home.container {
+    padding-left: 10px;
+    margin: 10px 0;
+    width: 100%;
+}
+
 .subreddit-title {
   text-align: center;
 }
 
-.article-votes {
-    text-align: right;
+.article-item {
+    cursor: pointer;
+    position: relative;
+}
+
+.article-item:hover {
+    background-color: lightgray;
+}
+
+.article-item-votes {
+    text-align: center;
 }

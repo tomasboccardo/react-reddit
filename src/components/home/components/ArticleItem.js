@@ -1,17 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {push} from 'react-router-redux';
 import {Media,Row,Col} from 'react-bootstrap';
 import {get} from 'lodash';
 import isUrl from 'is-url';
 import FontAwesome from 'react-fontawesome';
+import TimeAgo from 'react-timeago'
 
 class ArticleItem extends React.Component {
 	render() {
 		return (
-			<li className="list-group-item">
+			<li className="list-group-item article-item" onClick={() => this.props.goToArticle(this.props.article.id)}>
 				<Row>
-					<Col xs={10}>
+					<Col xs={1} className="article-item-votes">
+						<FontAwesome name='chevron-up'/>
+						<div>{this.props.article.score}</div>
+						<FontAwesome name='chevron-down'/>
+					</Col>
+					<Col xs={11}>
 						<Media>
 							{isUrl(this.props.article.thumbnail) &&
 								<Media.Left>
@@ -20,22 +27,11 @@ class ArticleItem extends React.Component {
 							}
 							<Media.Body>
 								<Media.Heading>{this.props.article.title}</Media.Heading>
+								<Row>
+									<Col xs={9}>created <TimeAgo date={this.props.article.created * 1000}/> by {this.props.article.author.name}</Col>
+								</Row>
 							</Media.Body>
 						</Media>
-					</Col>
-					<Col xs={2} className="article-votes">
-						<Row>
-							<Col xs={12}>
-								{this.props.article.ups}
-								<FontAwesome name='chevron-up'/>
-							</Col>
-						</Row>
-						<Row>
-							<Col xs={12}>
-								{this.props.article.downs}
-								<FontAwesome name='chevron-down'/>
-							</Col>
-						</Row>
 					</Col>
 				</Row>
 			</li>
@@ -45,6 +41,7 @@ class ArticleItem extends React.Component {
 
 ArticleItem.propTypes = {
 	article: PropTypes.object.isRequired,
+	goToArticle: PropTypes.func.isRequired,
 };
 
 
@@ -56,7 +53,9 @@ const mapStateToProps = (state, ownProps) => {
 	}
 };
 
-const ArticleItemContainer = connect(mapStateToProps)(ArticleItem);
+const ArticleItemContainer = connect(mapStateToProps, {
+	goToArticle: (id) => push(`/article/${id}`)
+})(ArticleItem);
 
 ArticleItemContainer.propTypes = {
 	id: PropTypes.string.isRequired,

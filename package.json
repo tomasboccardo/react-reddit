@@ -13,7 +13,9 @@
     "react-fontawesome": "^1.6.1",
     "react-redux": "^5.0.4",
     "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
     "react-router-redux": "^5.0.0-alpha.6",
+    "react-timeago": "^3.3.0",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
     "snoowrap": "^1.13.0"

@@ -18,11 +18,9 @@ class Home extends React.Component {
 	render() {
 		return (
 			<Grid className="Home">
-				<Row className="subreddit-title">
-					<h1>{this.props.subreddit}</h1>
-				</Row>
 				<Row className="article-list">
-					<Col xs={8} xsOffset={2}><ArticleList subreddit={this.props.subreddit}/></Col>
+					<Col xs={9}><ArticleList subreddit={this.props.subreddit}/></Col>
+					<Col xs={3}>THE SIDEBAR LIVES HERE</Col>
 				</Row>
 			</Grid>
 		);
