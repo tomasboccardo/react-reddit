@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {Grid, Row, Col} from 'react-bootstrap';
 import {get} from 'lodash';
-import ArticleList from './components/ArticleList';
+import ArticleList from './components/article-list/ArticleList';
 
 import './Home.css';
 

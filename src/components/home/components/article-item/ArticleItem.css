@@ -1,0 +1,9 @@
+.ArticleItem {
+    cursor: pointer;
+    position: relative;
+}
+
+.ArticleItem:hover {
+    background-color: lightgray;
+}
+

@@ -5,18 +5,19 @@ import {push} from 'react-router-redux';
 import {Media,Row,Col} from 'react-bootstrap';
 import {get} from 'lodash';
 import isUrl from 'is-url';
-import FontAwesome from 'react-fontawesome';
 import TimeAgo from 'react-timeago'
+
+import ArticleItemScore from './components/score/ArticleItemScore'
+
+import './ArticleItem.css';
 
 class ArticleItem extends React.Component {
 	render() {
 		return (
-			<li className="list-group-item article-item" onClick={() => this.props.goToArticle(this.props.article.id)}>
+			<li className="list-group-item ArticleItem" onClick={() => this.props.goToArticle(this.props.article.id)}>
 				<Row>
-					<Col xs={1} className="article-item-votes">
-						<FontAwesome name='chevron-up'/>
-						<div>{this.props.article.score}</div>
-						<FontAwesome name='chevron-down'/>
+					<Col xs={1}>
+						<ArticleItemScore score={this.props.article.score}/>
 					</Col>
 					<Col xs={11}>
 						<Media>

@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {get} from 'lodash';
-import {fireArticlesFetch} from '../actions';
+import {fireArticlesFetch} from '../../actions';
 import {ListGroup} from 'react-bootstrap';
-import ArticleItem from './ArticleItem';
+import ArticleItem from '../article-item/ArticleItem';
 
 class ArticleList extends React.Component {
 	componentWillMount() {
