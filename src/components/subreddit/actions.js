@@ -3,6 +3,9 @@ import {
 	SUBREDDIT_ARTICLES_FETCH_REQUEST,
 	SUBREDDIT_ARTICLES_FETCH_RESPONSE,
 	SUBREDDIT_ARTICLES_FETCH_ERROR,
+	SUBREDDIT_DETAILS_FETCH_REQUEST,
+	SUBREDDIT_DETAILS_FETCH_RESPONSE,
+	SUBREDDIT_DETAILS_FETCH_ERROR,
 } from '../../actions/action-types';
 
 function fireArticlesFetchRequest() {
@@ -35,6 +38,41 @@ export function fireArticlesFetch(subreddit) {
 			})
 			.catch(error => {
 				dispatch(fireArticlesFetchError(error));
+			})
+
+	}
+}
+
+function fireSubredditDetailsFetchRequest() {
+	return {
+		type: SUBREDDIT_DETAILS_FETCH_REQUEST,
+	};
+}
+
+function fireSubredditDetailsFetchResponse(payload) {
+	return {
+		type: SUBREDDIT_DETAILS_FETCH_RESPONSE,
+		payload,
+	}
+}
+
+function fireSubredditDetailsFetchError(payload) {
+	return {
+		type: SUBREDDIT_DETAILS_FETCH_ERROR,
+		payload,
+	}
+}
+
+export function fireSubredditDetailsFetch(subreddit) {
+	return (dispatch) => {
+		dispatch(fireSubredditDetailsFetchRequest());
+
+		r.getSubreddit(subreddit).fetch()
+			.then(response => {
+				dispatch(fireSubredditDetailsFetchResponse(response))
+			})
+			.catch(error => {
+				dispatch(fireSubredditDetailsFetchError(error));
 			})
 
 	}

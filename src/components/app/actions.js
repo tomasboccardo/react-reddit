@@ -1,11 +1,4 @@
-import {SUBREDDIT_CHANGE, SUBREDDIT_EDITOR_CHANGE} from '../../actions/action-types';
-
-export function fireSubredditChange(newSubreddit) {
-	return {
-		type: SUBREDDIT_CHANGE,
-		payload: newSubreddit,
-	};
-}
+import {SUBREDDIT_EDITOR_CHANGE} from '../../actions/action-types';
 
 export function fireSubredditEditorChange(newValue) {
 	return {

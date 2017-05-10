@@ -3,6 +3,7 @@ import {Route} from 'react-router';
 
 import Header from './components/Header';
 import Home from '../home/Home';
+import Subreddit from '../subreddit/Subreddit';
 import Article from '../article/Article';
 
 import './App.css';
@@ -16,6 +17,7 @@ class App extends React.Component {
 				</div>
 				<div className="App-body">
 					<Route exact path="/" component={Home}/>
+					<Route exact path="/r/:subreddit" component={Subreddit}/>
 					<Route exact path="/article/:id" component={Article}/>
 				</div>
 			</div>

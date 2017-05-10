@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {push} from 'react-router-redux';
 import {get} from 'lodash';
 import {Navbar, FormGroup, FormControl, Button} from 'react-bootstrap';
-import {fireSubredditChange, fireSubredditEditorChange} from '../actions';
+import {fireSubredditEditorChange} from '../actions';
 
 class Header extends React.Component {
 	onSubredditEditorChange() {
@@ -23,7 +24,7 @@ class Header extends React.Component {
 				<Navbar.Collapse>
 					<Navbar.Form pullLeft>
 						<FormGroup>
-							<FormControl type="text" placeholder="subreddit" ref={node => this.subredditEditorNode = node} defaultValue={this.props.subredditEditorValue} onChange={() => this.onSubredditEditorChange()}/>
+							<FormControl type="text" placeholder="subreddit" ref={node => this.subredditEditorNode = node} onChange={() => this.onSubredditEditorChange()}/>
 						</FormGroup>
 						<Button type="submit" onClick={() => this.props.fireSubredditChange(this.props.subredditEditorValue)}>Go!</Button>
 					</Navbar.Form>
@@ -50,7 +51,7 @@ const mapStateToProps = (state) => {
 };
 
 const HeaderContainer = connect(mapStateToProps, {
-	fireSubredditChange,
+	fireSubredditChange: (subreddit) => push(`/r/${subreddit}`),
 	fireSubredditEditorChange,
 })(Header);
 

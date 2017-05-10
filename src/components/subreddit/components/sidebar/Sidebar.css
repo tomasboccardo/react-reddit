@@ -1,0 +1,6 @@
+.Home__sidebar {
+    background-color: gainsboro;
+    padding: 0 20px;
+    overflow-x: hidden;
+    bottom: 0;
+}
