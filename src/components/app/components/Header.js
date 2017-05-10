@@ -44,9 +44,8 @@ Header.propTypes = {
 export {Header};
 
 const mapStateToProps = (state) => {
-	const subredit = get(state, `app.selected_subreddit`);
 	return {
-		subredditEditorValue: get(state, `app.subreddit_editor_value`) || subredit,
+		subredditEditorValue: get(state, `app.subreddit_editor_value`),
 	}
 };
 
