@@ -1,7 +1,7 @@
 import React from 'react';
 import {Route} from 'react-router';
 
-import Header from './components/Header';
+import Header from './components/header/Header';
 import Home from '../home/Home';
 import Subreddit from '../subreddit/Subreddit';
 import Article from '../article/Article';
@@ -12,10 +12,8 @@ class App extends React.Component {
 	render() {
 		return (
 			<div className="App">
-				<div className="App-header">
-					<Header/>
-				</div>
-				<div className="App-body">
+				<Header/>
+				<div className="App__body">
 					<Route exact path="/" component={Home}/>
 					<Route exact path="/r/:subreddit" component={Subreddit}/>
 					<Route exact path="/article/:id" component={Article}/>

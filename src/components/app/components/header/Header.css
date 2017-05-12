@@ -1,0 +1,18 @@
+.App__header {
+    background-color: #222;
+    height: 51px;
+    margin-bottom: 10px;
+}
+
+.App__header nav.navbar-inverse {
+    border-color: transparent;
+}
+
+.App__header__subreddit-title {
+    width: 50%;
+    text-align: center;
+}
+
+.App__header__subreddit-input {
+    margin-right: 10px;
+}

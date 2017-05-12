@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import {push} from 'react-router-redux';
 import {Media,Row,Col} from 'react-bootstrap';
 import {get} from 'lodash';
 import isUrl from 'is-url';
 import TimeAgo from 'react-timeago'
+import LinesEllipsis from 'react-lines-ellipsis'
 
 import ArticleItemScore from './components/score/ArticleItemScore'
 
@@ -27,9 +29,16 @@ class ArticleItem extends React.Component {
 								</Media.Left>
 							}
 							<Media.Body>
-								<Media.Heading>{this.props.article.title}</Media.Heading>
+									<Media.Heading>
+										<LinesEllipsis text={this.props.article.title} maxLine='1' ellipsis='...' trimRight basedOn='letters'/>
+									</Media.Heading>
 								<Row>
-									<Col xs={9}>created <TimeAgo date={this.props.article.created * 1000}/> by {this.props.article.author.name}</Col>
+									<Col xs={6}>created <TimeAgo date={this.props.article.created * 1000}/> by {this.props.article.author.name}</Col>
+								</Row>
+								<Row>
+									<Col xs={12}>
+										<Link to={`/r/${this.props.article.subreddit.display_name.toLowerCase()}`} onClick={e => e.stopPropagation()}>{this.props.article.subreddit.display_name}</Link> - {this.props.article.num_comments} comments
+									</Col>
 								</Row>
 							</Media.Body>
 						</Media>
