@@ -16,7 +16,7 @@ class App extends React.Component {
 				<div className="App__body">
 					<Route exact path="/" component={Home}/>
 					<Route exact path="/r/:subreddit" component={Subreddit}/>
-					<Route exact path="/article/:id" component={Article}/>
+					<Route exact path="/r/:subreddit/comments/:id/:title/" component={Article}/>
 				</div>
 			</div>
 		);

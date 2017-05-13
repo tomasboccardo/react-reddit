@@ -1,0 +1,9 @@
+.Article__embedded-content {
+    text-align: center;
+    margin-top: 10px;
+    height: 50vh;
+}
+
+.Article__self-text {
+    margin: 20px 50px;
+}
