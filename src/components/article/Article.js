@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Row, Col} from 'react-bootstrap';
+import Img from 'react-image'
 import {get} from 'lodash';
 import ArticleHeader from './components/article-header/ArticleHeader';
 import {fireArticleFetch} from './actions'
@@ -23,9 +24,16 @@ class Article extends React.Component {
 		const embed = get(this.props.article, 'media_embed.content');
 		if (embed) {
 			return <div className="Article__embedded-content" dangerouslySetInnerHTML={{__html: embed}}></div>;
-		}
-		if (this.props.article.selftext_html) {
+		} else if (this.props.article.selftext_html) {
 			return <div className="Article__self-text" dangerouslySetInnerHTML={{__html: this.props.article.selftext_html}}></div>;
+		} else {
+			return <div className="Article__embedded-content">
+				<Img src={[
+					this.props.article.url,
+					get(this.props.article, 'preview.images.0.source.url'),
+					this.props.article.thumbnail,
+				]}/>
+			</div>;
 		}
 	}
 

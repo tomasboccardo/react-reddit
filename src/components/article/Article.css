@@ -4,6 +4,10 @@
     height: 50vh;
 }
 
+.Article__embedded-content img {
+    max-height: 50vh;
+}
+
 .Article__self-text {
     margin: 20px 50px;
 }

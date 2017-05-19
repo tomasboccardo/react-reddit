@@ -6,7 +6,7 @@ import isUrl from 'is-url';
 import TimeAgo from 'react-timeago'
 import LinesEllipsis from 'react-lines-ellipsis'
 
-import ArticleItemScore from './components/score/ArticleItemScore'
+import ArticleItemScore from '../article-score/ArticleItemScore'
 
 class ArticleHeader extends React.Component {
 	render() {
