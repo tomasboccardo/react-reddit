@@ -10,12 +10,12 @@ import ArticleList from '../subreddit/components/article-list/ArticleList';
 import './Home.css';
 
 class Home extends React.Component {
-	fetchData() {
-		this.props.fireArticlesFetch();
+	static fetchData(store) {
+		return store.dispatch(fireArticlesFetch());
 	}
 
 	componentWillMount() {
-		this.fetchData();
+		return this.props.fireArticlesFetch();
 	}
 
 	render() {

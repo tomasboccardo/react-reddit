@@ -11,18 +11,25 @@ import Sidebar from './components/sidebar/Sidebar';
 import './Subreddit.css';
 
 class Subreddit extends React.Component {
-	fetchData(subreddit) {
+	static fetchData(store, params) {
+		return Promise.all([
+			store.dispatch(fireArticlesFetch(params.subreddit)),
+			store.dispatch(fireSubredditDetailsFetch(params.subreddit)),
+		]);
+	}
+
+	_fetchDataInClient(subreddit){
 		this.props.fireArticlesFetch(subreddit);
 		this.props.fireSubredditDetailsFetch(subreddit);
 	}
 
 	componentWillMount() {
-		this.fetchData(this.props.subreddit);
+		this._fetchDataInClient(this.props.subreddit);
 	}
 
 	componentWillReceiveProps(nextProps) {
 		if (this.props.subreddit !== nextProps.subreddit) {
-			this.fetchData(nextProps.subreddit);
+			this._fetchDataInClient(nextProps.subreddit);
 		}
 	}
 

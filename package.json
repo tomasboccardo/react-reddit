@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "express": "^4.15.3",
     "font-awesome": "^4.7.0",
+    "history": "^4.6.1",
+    "ignore-styles": "^5.0.1",
     "is-url": "^1.2.2",
     "lodash": "^4.17.4",
     "prop-types": "^15.5.8",
@@ -24,6 +27,8 @@
     "snoowrap": "^1.13.0"
   },
   "devDependencies": {
+    "babel-plugin-transform-html-import-to-string": "0.0.1",
+    "babel-register": "^6.24.1",
     "react-scripts": "0.9.5"
   },
   "scripts": {
@@ -31,5 +36,13 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ],
+    "plugins": [
+      "transform-html-import-to-string"
+    ]
   }
 }

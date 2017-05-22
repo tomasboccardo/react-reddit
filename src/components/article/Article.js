@@ -10,13 +10,13 @@ import {fireArticleFetch} from './actions'
 import './Article.css'
 
 class Article extends React.Component {
-	fetchData() {
-		this.props.fireArticleFetch(this.props.id);
+	static fetchData(store, params) {
+		return store.dispatch(fireArticleFetch(params.id));
 	}
 
 	componentWillMount() {
 		if (!this.props.article) {
-			this.fetchData();
+			this.props.fireArticleFetch(this.props.id);
 		}
 	}
 

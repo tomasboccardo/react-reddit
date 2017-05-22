@@ -29,7 +29,7 @@ export function fireArticlesFetch() {
 	return (dispatch) => {
 		dispatch(fireArticlesFetchRequest());
 
-		r.getTop()
+		return r.getTop()
 			.then(response => {
 				dispatch(fireArticlesFetchResponse(response))
 			})

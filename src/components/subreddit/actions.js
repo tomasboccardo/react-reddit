@@ -32,7 +32,7 @@ export function fireArticlesFetch(subreddit) {
 	return (dispatch) => {
 		dispatch(fireArticlesFetchRequest());
 
-		r.getSubreddit(subreddit).getTop()
+		return r.getSubreddit(subreddit).getTop()
 			.then(response => {
 				dispatch(fireArticlesFetchResponse({subreddit, articles: response}))
 			})
@@ -67,7 +67,7 @@ export function fireSubredditDetailsFetch(subreddit) {
 	return (dispatch) => {
 		dispatch(fireSubredditDetailsFetchRequest());
 
-		r.getSubreddit(subreddit).fetch()
+		return r.getSubreddit(subreddit).fetch()
 			.then(response => {
 				dispatch(fireSubredditDetailsFetchResponse({subreddit, details: response}))
 			})

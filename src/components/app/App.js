@@ -1,10 +1,9 @@
 import React from 'react';
-import {Route} from 'react-router';
+import {Switch, Route} from 'react-router';
 
+import routes from '../../routes'
 import Header from './components/header/Header';
-import Home from '../home/Home';
-import Subreddit from '../subreddit/Subreddit';
-import Article from '../article/Article';
+
 
 import './App.css';
 
@@ -14,9 +13,9 @@ class App extends React.Component {
 			<div className="App">
 				<Header/>
 				<div className="App__body">
-					<Route exact path="/" component={Home}/>
-					<Route exact path="/r/:subreddit" component={Subreddit}/>
-					<Route exact path="/r/:subreddit/comments/:id/:title/" component={Article}/>
+					<Switch>
+						{routes.map(route => <Route exact={route.exact} key={route.path} path={route.path} component={route.component}/>)}
+					</Switch>
 				</div>
 			</div>
 		);

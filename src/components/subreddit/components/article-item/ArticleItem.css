@@ -1,13 +1,12 @@
 .ArticleItem {
-    cursor: pointer;
-    position: relative;
+  cursor: pointer;
+  position: relative;
 }
-
 .ArticleItem:hover {
-    background-color: lightgray;
+  background-color: lightgray;
 }
 
 .ArticleItem__domain {
-    margin-left: 5px;
-    color: lightslategray;
+  margin-left: 5px;
+  color: lightslategray;
 }
