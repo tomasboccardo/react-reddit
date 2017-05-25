@@ -25,14 +25,21 @@ function fireArticlesFetchError(payload) {
 	}
 }
 
+export function populateArticlesAuthorName(articles) {
+	return Promise.all(articles.map(article => {
+		return article.author.fetch().then(author => {
+			article.authorName = author.name;
+		})
+	})).then(() => articles);
+}
+
 export function fireArticlesFetch() {
 	return (dispatch) => {
 		dispatch(fireArticlesFetchRequest());
 
 		return r.getTop()
-			.then(response => {
-				dispatch(fireArticlesFetchResponse(response))
-			})
+			.then((articles) => populateArticlesAuthorName(articles))
+			.then(articles => dispatch(fireArticlesFetchResponse(articles)))
 			.catch(error => {
 				dispatch(fireArticlesFetchError(error));
 			})

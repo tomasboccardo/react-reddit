@@ -1,6 +1,10 @@
+.Article {
+    margin-top: 10px;
+}
+
 .Article__embedded-content {
     text-align: center;
-    margin-top: 10px;
+    margin-top: 20px;
     height: 50vh;
 }
 

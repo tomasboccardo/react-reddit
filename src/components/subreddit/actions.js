@@ -7,6 +7,7 @@ import {
 	SUBREDDIT_DETAILS_FETCH_RESPONSE,
 	SUBREDDIT_DETAILS_FETCH_ERROR,
 } from '../../actions/action-types';
+import { populateArticlesAuthorName } from '../home/actions';
 
 function fireArticlesFetchRequest() {
 	return {
@@ -33,9 +34,8 @@ export function fireArticlesFetch(subreddit) {
 		dispatch(fireArticlesFetchRequest());
 
 		return r.getSubreddit(subreddit).getTop()
-			.then(response => {
-				dispatch(fireArticlesFetchResponse({subreddit, articles: response}))
-			})
+			.then((articles) => populateArticlesAuthorName(articles))
+			.then(articles => dispatch(fireArticlesFetchResponse({subreddit, articles})))
 			.catch(error => {
 				dispatch(fireArticlesFetchError(error));
 			})

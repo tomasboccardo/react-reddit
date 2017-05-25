@@ -27,11 +27,11 @@ class ArticleHeader extends React.Component {
 								<a href={this.props.article.url} onClick={e => e.stopPropagation()}><LinesEllipsis text={this.props.article.title} maxLine='1' ellipsis='...' trimRight basedOn='letters'/></a>
 							</Media.Heading>
 							<Row>
-								<Col xs={6}>created <TimeAgo date={this.props.article.created * 1000}/> by {this.props.article.author.name}</Col>
+								<Col xs={6}>created <TimeAgo date={this.props.article.created * 1000}/> by {this.props.article.authorName}</Col>
 							</Row>
 							<Row>
 								<Col xs={12}>
-									<Link to={this.props.article.subreddit_name_prefixed} onClick={e => e.stopPropagation()}>{this.props.article.subreddit_name_prefixed}</Link> - {this.props.article.num_comments} comments
+									<Link to={`/${this.props.article.subreddit_name_prefixed}`} onClick={e => e.stopPropagation()}>{this.props.article.subreddit_name_prefixed}</Link> - {this.props.article.num_comments} comments
 									<span className="ArticleItem__domain">({this.props.article.domain})</span>
 								</Col>
 							</Row>

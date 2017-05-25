@@ -5,6 +5,7 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import { get } from 'lodash';
 
 import { fireArticlesFetch, fireSubredditDetailsFetch } from './actions';
+import SubredditHeader from './components/subreddit-header/SubredditHeader';
 import ArticleList from './components/article-list/ArticleList';
 import Sidebar from './components/sidebar/Sidebar';
 
@@ -35,12 +36,15 @@ class Subreddit extends React.Component {
 
 	render() {
 		return (
-			<Grid className="Subreddit">
-				<Row className="article-list">
-					<Col xs={9}><ArticleList articles={this.props.articles}/></Col>
-					<Col xs={3}><Sidebar details={this.props.subredditDetails}/></Col>
-				</Row>
-			</Grid>
+			<div className="Subreddit">
+				<SubredditHeader subredditDetails={this.props.subredditDetails}/>
+				<Grid className="Subreddit__Articles">
+					<Row className="article-list">
+						<Col xs={9}><ArticleList articles={this.props.articles}/></Col>
+						<Col xs={3}><Sidebar details={this.props.subredditDetails}/></Col>
+					</Row>
+				</Grid>
+			</div>
 		);
 	}
 }

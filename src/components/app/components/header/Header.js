@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {matchPath} from 'react-router';
 import {push} from 'react-router-redux';
 import {Link} from 'react-router-dom'
 import {get} from 'lodash';
@@ -36,14 +35,7 @@ class Header extends React.Component {
 								<Navbar.Toggle />
 							</Navbar.Header>
 						</Col>
-						<Col xs={6}>
-							<Navbar.Collapse>
-								<Navbar.Brand className="App__header__subreddit-title">
-									<Link to={`/r/${this.props.subreddit}`}>{this.props.subreddit}</Link>
-								</Navbar.Brand>
-							</Navbar.Collapse>
-						</Col>
-						<Col xs={3}>
+						<Col xs={3} xsOffset={6}>
 							<Navbar.Collapse>
 								<Navbar.Form pullRight>
 									<FormGroup className="App__header__subreddit-input">
@@ -62,7 +54,6 @@ class Header extends React.Component {
 
 Header.propTypes = {
 	subredditEditorValue: PropTypes.string.isRequired,
-	subreddit: PropTypes.string,
 	fireSubredditChange: PropTypes.func.isRequired,
 	fireSubredditEditorChange: PropTypes.func.isRequired,
 };
@@ -70,13 +61,10 @@ Header.propTypes = {
 
 export {Header};
 
-const mapStateToProps = (state) => {
-	const match = matchPath(get(state, 'routing.location.pathname'), {path: '/r/:subreddit', exact: true});
-	return {
-		subredditEditorValue: get(state, `app.subreddit_editor_value`),
-		subreddit: get(state, `subreddit.${get(match, 'params.subreddit')}.display_name`),
-	}
-};
+const mapStateToProps = (state) => ({
+	subredditEditorValue: get(state, `app.subreddit_editor_value`),
+});
+
 
 
 const HeaderContainer = connect(mapStateToProps, {

@@ -1,4 +1,8 @@
 .Subreddit {
+    width: 100%;
+}
+
+.Subreddit__Articles {
     padding-left: 10px;
     margin: 10px 0;
     width: 100%;

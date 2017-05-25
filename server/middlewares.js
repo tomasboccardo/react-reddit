@@ -1,14 +1,8 @@
-import 'ignore-styles';
-import babelRegister from 'babel-register';
-
-babelRegister({ ignore: /\/(build|node_modules)\//, presets: ['react-app'] });
-
+import fs from 'fs';
 import path from 'path';
 
-import express from 'express';
-
-import { createElement } from 'react';
-import { renderToString } from 'react-dom/server';
+import React from 'react';
+import ReactDomServer from 'react-dom/server';
 import { Provider } from 'react-redux';
 import { StaticRouter, matchPath } from 'react-router';
 import { createMemoryHistory } from 'history';
@@ -19,17 +13,15 @@ import configureStore from '../src/store';
 import App from '../src/components/app/App'
 import htmlIndex from '../build/index.html';
 
-function universalLoader(req, res) {
+function _universalRenderer(req, res, index) {
 	const history = createMemoryHistory();
 
 	let store = configureStore({ history });
 
 	const promises = [];
 	routes.some(route => {
-		// use `matchPath` here
 		const match = matchPath(req.url, route);
 		if (match) {
-			console.log(match);
 			promises.push(route.loadData(store, match.params));
 		}
 		return match
@@ -37,12 +29,12 @@ function universalLoader(req, res) {
 
 	Promise.all(promises).then(() => {
 		const context = {};
-		const reactApp = renderToString(
-			createElement(Provider, {store},
-				createElement(StaticRouter, { location: req.url, context },
-					createElement(App)
-				)
-			)
+		const reactApp = ReactDomServer.renderToString(
+			<Provider store={store}>
+				<StaticRouter context={context} location={req.url}>
+					<App/>
+				</StaticRouter>
+			</Provider>
 		);
 
 		if (context.url) {
@@ -56,12 +48,14 @@ function universalLoader(req, res) {
 	})
 }
 
-const app = express();
+export function universalRenderer(req, res) {
+	fs.readFile(path.resolve(__dirname, '..', 'build', 'index.html'), 'utf8', function (err, index) {
+		if (err) {
+			console.log(err);
+			res.status(500).send(err)
+		} else {
+			_universalRenderer(req,res, index)
+		}
+	});
 
-app.use('^/$', universalLoader);
-app.use(express.static(path.resolve(__dirname, '..', 'build')));
-app.use('/', universalLoader);
-
-app.listen(3001, ()=>{
-	console.log(`App listening on port 3001!`)
-});
+}
