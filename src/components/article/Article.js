@@ -10,10 +10,6 @@ import {fireArticleFetch} from './actions'
 import './Article.css'
 
 class Article extends React.Component {
-	static fetchData(store, params) {
-		return store.dispatch(fireArticleFetch(params.id));
-	}
-
 	componentWillMount() {
 		if (!this.props.article) {
 			this.props.fireArticleFetch(this.props.id);
@@ -68,4 +64,8 @@ const mapStateToProps = (state, ownProps) => {
 	}
 };
 
-export default connect(mapStateToProps, {fireArticleFetch})(Article);
+const ArticleContainer = connect(mapStateToProps, {fireArticleFetch})(Article);
+
+ArticleContainer.fetchData = (store, params) => store.dispatch(fireArticleFetch(params.id));
+
+export default ArticleContainer;

@@ -22,7 +22,7 @@ function _universalRenderer(req, res, index) {
 	routes.some(route => {
 		const match = matchPath(req.url, route);
 		if (match) {
-			promises.push(route.loadData(store, match.params));
+			promises.push(route.component.fetchData(store, match.params));
 		}
 		return match
 	});

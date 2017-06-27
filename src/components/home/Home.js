@@ -10,10 +10,6 @@ import ArticleList from '../subreddit/components/article-list/ArticleList';
 import './Home.css';
 
 class Home extends React.Component {
-	static fetchData(store) {
-		return store.dispatch(fireArticlesFetch());
-	}
-
 	componentWillMount() {
 		return this.props.fireArticlesFetch();
 	}
@@ -45,5 +41,8 @@ const mapStateToProps = (state) => {
 const HomeContainer = connect(mapStateToProps, {
 	fireArticlesFetch,
 })(Home);
+
+HomeContainer.fetchData = store => store.dispatch(fireArticlesFetch());
+
 
 export default HomeContainer;

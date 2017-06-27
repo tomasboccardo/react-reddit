@@ -12,25 +12,18 @@ import Sidebar from './components/sidebar/Sidebar';
 import './Subreddit.css';
 
 class Subreddit extends React.Component {
-	static fetchData(store, params) {
-		return Promise.all([
-			store.dispatch(fireArticlesFetch(params.subreddit)),
-			store.dispatch(fireSubredditDetailsFetch(params.subreddit)),
-		]);
-	}
-
-	_fetchDataInClient(subreddit){
+	_fetchData(subreddit){
 		this.props.fireArticlesFetch(subreddit);
 		this.props.fireSubredditDetailsFetch(subreddit);
 	}
 
 	componentWillMount() {
-		this._fetchDataInClient(this.props.subreddit);
+		this._fetchData(this.props.subreddit);
 	}
 
 	componentWillReceiveProps(nextProps) {
 		if (this.props.subreddit !== nextProps.subreddit) {
-			this._fetchDataInClient(nextProps.subreddit);
+			this._fetchData(nextProps.subreddit);
 		}
 	}
 
@@ -76,5 +69,12 @@ const SubredditContainer = connect(mapStateToProps, {
 	fireArticlesFetch,
 	fireSubredditDetailsFetch,
 }, mergeProps)(Subreddit);
+
+SubredditContainer.fetchData = (store, params) =>
+	Promise.all([
+		store.dispatch(fireArticlesFetch(params.subreddit)),
+		store.dispatch(fireSubredditDetailsFetch(params.subreddit)),
+	]);
+
 
 export default SubredditContainer;
