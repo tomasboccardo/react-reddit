@@ -1,4 +1,4 @@
-import r from '../../services/reddit';
+import redditService from '../../services/reddit';
 import {
 	ARTICLES_FETCH_REQUEST,
 	ARTICLES_FETCH_RESPONSE,
@@ -11,17 +11,21 @@ function fireArticleFetchRequest() {
 	};
 }
 
-function fireArticleFetchResponse(payload) {
+function fireArticleFetchResponse(article) {
 	return {
 		type: ARTICLES_FETCH_RESPONSE,
-		payload,
+		payload: {
+			article,
+		},
 	}
 }
 
-function fireArticleFetchError(payload) {
+function fireArticleFetchError(error) {
 	return {
 		type: ARTICLES_FETCH_ERROR,
-		payload,
+		payload: {
+			error,
+		},
 	}
 }
 
@@ -29,13 +33,8 @@ export function fireArticleFetch(id) {
 	return (dispatch) => {
 		dispatch(fireArticleFetchRequest());
 
-		return r.getSubmission(id).fetch()
-			.then(response => {
-				dispatch(fireArticleFetchResponse(response))
-			})
-			.catch(error => {
-				dispatch(fireArticleFetchError(error));
-			})
-
+		return redditService.getSubmission(id).fetch()
+			.then(article => dispatch(fireArticleFetchResponse(article)),
+				error => dispatch(fireArticleFetchError(error)));
 	}
 }

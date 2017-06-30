@@ -1,4 +1,4 @@
-import r from '../../services/reddit';
+import redditService from '../../services/reddit';
 import {
 	SUBREDDIT_ARTICLES_FETCH_REQUEST,
 	SUBREDDIT_ARTICLES_FETCH_RESPONSE,
@@ -15,17 +15,22 @@ function fireArticlesFetchRequest() {
 	};
 }
 
-function fireArticlesFetchResponse(payload) {
+function fireArticlesFetchResponse(articles, subreddit) {
 	return {
 		type: SUBREDDIT_ARTICLES_FETCH_RESPONSE,
-		payload,
+		payload: {
+			articles,
+			subreddit,
+		},
 	}
 }
 
-function fireArticlesFetchError(payload) {
+function fireArticlesFetchError(error) {
 	return {
 		type: SUBREDDIT_ARTICLES_FETCH_ERROR,
-		payload,
+		payload: {
+			error,
+		},
 	}
 }
 
@@ -33,13 +38,10 @@ export function fireArticlesFetch(subreddit) {
 	return (dispatch) => {
 		dispatch(fireArticlesFetchRequest());
 
-		return r.getSubreddit(subreddit).getTop()
+		return redditService.getSubreddit(subreddit).getTop()
 			.then((articles) => populateArticlesAuthorName(articles))
-			.then(articles => dispatch(fireArticlesFetchResponse({subreddit, articles})))
-			.catch(error => {
-				dispatch(fireArticlesFetchError(error));
-			})
-
+			.then(articles => dispatch(fireArticlesFetchResponse(articles, subreddit)),
+				error => dispatch(fireArticlesFetchError(error)));
 	}
 }
 
@@ -49,17 +51,22 @@ function fireSubredditDetailsFetchRequest() {
 	};
 }
 
-function fireSubredditDetailsFetchResponse(payload) {
+function fireSubredditDetailsFetchResponse(details, subreddit) {
 	return {
 		type: SUBREDDIT_DETAILS_FETCH_RESPONSE,
-		payload,
+		payload: {
+			details,
+			subreddit,
+		},
 	}
 }
 
-function fireSubredditDetailsFetchError(payload) {
+function fireSubredditDetailsFetchError(error) {
 	return {
 		type: SUBREDDIT_DETAILS_FETCH_ERROR,
-		payload,
+		payload: {
+			error
+		},
 	}
 }
 
@@ -67,13 +74,8 @@ export function fireSubredditDetailsFetch(subreddit) {
 	return (dispatch) => {
 		dispatch(fireSubredditDetailsFetchRequest());
 
-		return r.getSubreddit(subreddit).fetch()
-			.then(response => {
-				dispatch(fireSubredditDetailsFetchResponse({subreddit, details: response}))
-			})
-			.catch(error => {
-				dispatch(fireSubredditDetailsFetchError(error));
-			})
-
+		return redditService.getSubreddit(subreddit).fetch()
+			.then(details => dispatch(fireSubredditDetailsFetchResponse(details, subreddit)),
+				error => dispatch(fireSubredditDetailsFetchError(error)));
 	}
 }

@@ -11,7 +11,10 @@ import routes from '../src/routes';
 import configureStore from '../src/store';
 
 import App from '../src/components/app/App'
-import htmlIndex from '../build/index.html';
+
+function _objectToSanitizeJSON(obj) {
+	return JSON.stringify(obj).replace(/</g, '\\u003c');
+}
 
 function _universalRenderer(req, res, index) {
 	const history = createMemoryHistory();
@@ -29,6 +32,7 @@ function _universalRenderer(req, res, index) {
 
 	Promise.all(promises).then(() => {
 		const context = {};
+		const state = _objectToSanitizeJSON(store.getState());
 		const reactApp = ReactDomServer.renderToString(
 			<Provider store={store}>
 				<StaticRouter context={context} location={req.url}>
@@ -40,9 +44,10 @@ function _universalRenderer(req, res, index) {
 		if (context.url) {
 			res.redirect(302, context.url);
 		} else {
-			const renderedApp = htmlIndex
+			const renderedApp = index
 				.replace('<div id="root"></div>', `<div id="root">${reactApp}</div>`)
-				.replace('window.__PRELOADED_STATE__=void 0', `window.__PRELOADED_STATE__=${JSON.stringify(store.getState()).replace(/</g, '\\u003c')}`);
+				.replace('<script id="state"></script>',
+					`<script id="state">window.__PRELOADED_STATE__=${state}</script>`);
 			res.send(renderedApp)
 		}
 	})
