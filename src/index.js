@@ -17,7 +17,7 @@ delete window.__PRELOADED_STATE__;
 const history = createBrowserHistory();
 const store = configureStore({initialState, history});
 
-ReactDOM.render(
+ReactDOM.hydrate(
 	<Provider store={store}>
 		<ConnectedRouter history={history}>
 			<App/>
