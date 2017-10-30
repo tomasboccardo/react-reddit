@@ -1,61 +1,52 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {Row, Col} from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { Row, Col } from 'react-bootstrap';
 import Img from 'react-image'
-import {get} from 'lodash';
+import { get, flow } from 'lodash';
+
+import { fireArticleFetch } from './actions'
+import withInitialData from '../common/withInitialData';
 import ArticleHeader from './components/article-header/ArticleHeader';
-import {fireArticleFetch} from './actions'
 
 import './Article.css'
 
-class Article extends React.Component {
-	componentWillMount() {
-		if (!this.props.article) {
-			this.props.fireArticleFetch(this.props.id);
-		}
-	}
-
-	getContentPreview() {
-		const embed = get(this.props.article, 'media_embed.content');
-		if (embed) {
-			return <div className="Article__embedded-content" dangerouslySetInnerHTML={{__html: embed}}></div>;
-		} else if (this.props.article.selftext_html) {
-			return <div className="Article__self-text" dangerouslySetInnerHTML={{__html: this.props.article.selftext_html}}></div>;
-		} else {
-			return <div className="Article__embedded-content">
-				<Img src={[
-					this.props.article.url,
-					get(this.props.article, 'preview.images.0.source.url'),
-					this.props.article.thumbnail,
-				]}/>
-			</div>;
-		}
-	}
-
-	render() {
-		return (
-			<Row className="Article">
-				{this.props.article ?
-					<Col xs={12}>
-						<ArticleHeader article={this.props.article}/>
-						{this.getContentPreview()}
-					</Col>
-					:
-					<div></div>
-				}
-			</Row>
-		);
+function getContentPreview(article) {
+	const embed = get(article, 'media_embed.content');
+	if (embed) {
+		return <div className="Article__embedded-content" dangerouslySetInnerHTML={{ __html: embed }}></div>;
+	} else if (article.selftext_html) {
+		return <div className="Article__self-text" dangerouslySetInnerHTML={{ __html: article.selftext_html }}></div>;
+	} else {
+		return <div className="Article__embedded-content">
+			<Img src={[
+				article.url,
+				get(article, 'preview.images.0.source.url'),
+				article.thumbnail,
+			]} />
+		</div>;
 	}
 }
+
+const Article = ({ id, article }) => (
+	<Row className="Article">
+		{article ?
+			<Col xs={12}>
+				<ArticleHeader article={article} />
+				{getContentPreview(article)}
+			</Col>
+			:
+			<div></div>
+		}
+	</Row>
+);
 
 Article.propTypes = {
 	id: PropTypes.string.isRequired,
 	article: PropTypes.object,
-	fireArticleFetch: PropTypes.func.isRequired,
 };
 
-export {Article};
+export { Article };
 
 const mapStateToProps = (state, ownProps) => {
 	return {
@@ -64,8 +55,13 @@ const mapStateToProps = (state, ownProps) => {
 	}
 };
 
-const ArticleContainer = connect(mapStateToProps, {fireArticleFetch})(Article);
+const mapDispatchToProps = {
+	fireArticleFetch,
+}
 
-ArticleContainer.fetchData = (store, params) => store.dispatch(fireArticleFetch(params.id));
+const ArticleContainer = flow([
+	withInitialData(mapDispatchToProps, [ 'id' ]),
+	connect(mapStateToProps, mapDispatchToProps),
+])(Article);
 
 export default ArticleContainer;

@@ -2,35 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Grid, Row, Col } from 'react-bootstrap';
-import { get } from 'lodash';
+import { get, flow } from 'lodash';
 
 import { fireArticlesFetch } from './actions';
+import withInitialData from '../common/withInitialData';
 import ArticleList from '../subreddit/components/article-list/ArticleList';
 
 import './Home.css';
 
-class Home extends React.Component {
-	componentWillMount() {
-		return this.props.fireArticlesFetch();
-	}
-
-	render() {
-		return (
-			<Grid className="Home">
-				<Row className="article-list">
-					<Col xs={12}><ArticleList articles={this.props.articles}/></Col>
-				</Row>
-			</Grid>
-		);
-	}
-}
+const Home = ({ articles }) => (
+	<Grid className="Home">
+		<Row className="article-list">
+			<Col xs={12}><ArticleList articles={articles} /></Col>
+		</Row>
+	</Grid>
+);
 
 Home.propTypes = {
 	articles: PropTypes.array.isRequired,
 	fireArticlesFetch: PropTypes.func.isRequired,
 };
 
-export {Home};
+export { Home };
 
 const mapStateToProps = (state) => {
 	return {
@@ -38,11 +31,13 @@ const mapStateToProps = (state) => {
 	}
 };
 
-const HomeContainer = connect(mapStateToProps, {
+const mapDispatchToProps = {
 	fireArticlesFetch,
-})(Home);
+};
 
-HomeContainer.fetchData = store => store.dispatch(fireArticlesFetch());
-
+const HomeContainer = flow([
+	withInitialData(mapDispatchToProps),
+	connect(mapStateToProps, mapDispatchToProps),
+])(Home);
 
 export default HomeContainer;
