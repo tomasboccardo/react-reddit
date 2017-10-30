@@ -1,0 +1,6 @@
+{
+	"userAgent": "<< user agent given by reddit >>",
+	"clientId": "<< client id given by reddit >>",
+	"clientSecret": "<< client secret given by reddit >>",
+	"refreshToken": "<< refresh token given by reddit >>"
+}
